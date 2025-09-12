@@ -7,18 +7,39 @@
 
 import SwiftUI
 
+func addActivity() {
+    
+}
+
 struct ContentView: View {
+    
+    @State private var showingAddActivity = false
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationStack {
+            List(defaultActivities) { activity in
+                Text(activity.name)
+            }
+            .navigationTitle("Activities")
+            .toolbar {
+                ToolbarItem(placement: .bottomBar) {
+                    Button(
+                        action: {
+                            self.showingAddActivity = true
+                        }
+                    ) {
+                        Image(systemName: "plus")
+                    }
+                }
+            }
+            .sheet(isPresented: $showingAddActivity) {
+                AddActivityView()
+            }
         }
-        .padding()
     }
 }
 
 #Preview {
     ContentView()
 }
+        
